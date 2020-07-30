@@ -15,28 +15,40 @@ slack_client = WebClient(slack_bot_token)
 def handle_message(event_data):
     message = event_data["event"]
     # If the incoming message contains "hi", then respond with a "Hello" message
-    anoop = "U018746RDLY"
-    abhi = "U018857RF32"
+    Anoop = "U018746RDLY"
+    Abhi = "U018857RF32"
     Arjun = "U017F3DQL83"
+    Myrrh = 'U01703Z7LCF'
+    funny = ["that's what she said", "thats what she said", ":thats-what-she-said", "stupidity", "Abhi", "hi"]
     # slack_client.chat_delete(channel=message["channel"],ts=message['ts'],as_user = True)
-    if message.get("subtype") is None and "hi" in message.get('text').lower() and message['user'] != Arjun:
+    for not_funny in funny:
+        if not_funny == message.get('text').lower():
+            j = True
+            break
+        else:
+            j = False
+    if message.get("subtype") is None and j == True and message['user'] != abhi:
         channel = message["channel"]
         message = "lol <@%s>! ur so funny man" % message["user"]
         slack_client.chat_postMessage(channel=channel, text=message)
         #slack_client.chat_postMessage(channel=channel, text="hi this code was watermarked")
-    elif message['user'] == Arjun:
+    elif message['user'] == Abhi:
         channel = message["channel"]
         upperlowercase = (message.get('text'))
         newPhrase = ""
-        i = True
-        for char in upperlowercase:
-            if i:
-                newPhrase += char.upper()
-            else:
-                newPhrase += char.lower()
-            if char != ' ':
-                i = not i
-        slack_client.chat_postMessage(channel=channel, text=(newPhrase))
+        if len(upperlowercase) >= 2:
+            i = True
+            for char in upperlowercase:
+                if i:
+                    newPhrase += char.lower()
+                else:
+                    newPhrase += char.upper()
+                if char != ' ':
+                    i = not i
+            slack_client.chat_postMessage(channel=channel, text=(newPhrase))
+        else:
+            pass
+            
 
 # Error events
 @slack_events_adapter.on("error")
