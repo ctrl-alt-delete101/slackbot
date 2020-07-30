@@ -27,7 +27,7 @@ def handle_message(event_data):
             break
         else:
             j = False
-    if message.get("subtype") is None and j == True and message['user'] != abhi:
+    if message.get("subtype") is None and j == True and message['user'] != Abhi:
         channel = message["channel"]
         message = "lol <@%s>! ur so funny man" % message["user"]
         slack_client.chat_postMessage(channel=channel, text=message)
